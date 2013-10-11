@@ -2,7 +2,10 @@ package com.ils.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -19,7 +22,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ils.controller.validator.BukuFormValidator;
 import com.ils.dao.BukuDao;
+import com.ils.dao.KategoriDao;
 import com.ils.entity.Buku;
+import com.ils.entity.Kategori;
 
 /**
  * @author danangku
@@ -30,6 +35,8 @@ public class BukuController {
 
 	@Autowired
 	private BukuDao bukuDao;
+	@Autowired
+	private KategoriDao kategoriDao;
 	@Autowired
 	private BukuFormValidator validator;
 
@@ -58,8 +65,14 @@ public class BukuController {
 	@RequestMapping("/viewAllBuku")
 	public ModelAndView getAllBuku() {
 		ModelAndView mav = new ModelAndView("showBuku");
-		List<Buku> buku = bukuDao.getAllBuku();
+		Map referenceData = new HashMap();
+//		Map<String,String> kategoris = new LinkedHashMap<String,String>();
+		
+		List<Buku> buku = bukuDao.getAllBuku();		
+		List<Kategori> kategoris = kategoriDao.getAllKategori();
 		mav.addObject("SEARCH_BUKU_RESULTS_KEY", buku);
+//		mav.addObject("kategoriList", kategoris);
+		referenceData.put("kategoriList", kategoris);
 		return mav;
 	}
 
@@ -67,22 +80,41 @@ public class BukuController {
 	public ModelAndView newbukuForm() {
 		ModelAndView mav = new ModelAndView("newBuku");
 		Buku buku = new Buku();
+		List<Kategori> kategoris = kategoriDao.getAllKategori();
 		mav.getModelMap().put("newBuku", buku);
+		mav.addObject("kategoris", kategoris);
 		return mav;
 	}
+//	@RequestMapping(value = "/saveBuku", method = RequestMethod.GET)
+//	public ModelAndView newbukuForm(@ModelAttribute("command")  Buku buku,BindingResult result) {
+//		Map<String, Object> model = new HashMap<String, Object>();
+////		ModelAndView mav = new ModelAndView("newBuku");
+//		
+//		model.put("newBuku",  bukuDao.getAllBuku());
+//		model.put("categories",  kategoriDao.getAllKategori());
+//		return new ModelAndView("newBuku", model);
+//	}
 	
-	@RequestMapping(value="/saveBuku", method=RequestMethod.POST)
-	 public String create(@ModelAttribute("newBuku")Buku buku, BindingResult result, SessionStatus status)
-	 {
-	  validator.validate(buku, result);
-	  if (result.hasErrors()) 
-	  {    
-	   return "newBuku";
-	  }
-	  bukuDao.save(buku);
-	  status.setComplete();
-	  return "redirect:viewAllBuku.do";
-	 }
+//	@RequestMapping(value="/saveBuku", method=RequestMethod.POST)
+//	 public String create(@ModelAttribute("newBuku")Buku buku, BindingResult result, SessionStatus status)
+//	 {
+//	  validator.validate(buku, result);
+//	  if (result.hasErrors()) 
+//	  {    
+//	   return "newBuku";
+//	  }
+//	  bukuDao.save(buku);
+//	  status.setComplete();
+//	  return "redirect:viewAllBuku.do";
+//	 }
+	
+	@RequestMapping(value = "/saveBuku", method = RequestMethod.POST)
+	public ModelAndView create(@ModelAttribute("newBuku") Buku buku, 
+			BindingResult result) {
+		  bukuDao.save(buku);
+		return new ModelAndView("redirect:viewAllBuku.do");
+		  
+	}
 	
 	@RequestMapping(value="/updateBuku", method=RequestMethod.GET)
 	 public ModelAndView editBuku(@RequestParam("idBuku")Integer idBuku)

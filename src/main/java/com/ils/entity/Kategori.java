@@ -33,5 +33,34 @@ public class Kategori {
 		this.kategori = kategori;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + idKategori;
+		result = prime * result
+				+ ((kategori == null) ? 0 : kategori.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Kategori other = (Kategori) obj;
+		if (idKategori != other.idKategori)
+			return false;
+		if (kategori == null) {
+			if (other.kategori != null)
+				return false;
+		} else if (!kategori.equals(other.kategori))
+			return false;
+		return true;
+	}
+
 	
 }

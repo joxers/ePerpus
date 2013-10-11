@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 /**
  * @author danangku
@@ -24,8 +25,8 @@ public class Buku {
 	
 	private Date tglBeli;
 	private String penerbit;
-
-	
+	@OneToOne
+	private Kategori kategori;
 	
 	public Buku(){}
 	
@@ -43,7 +44,8 @@ public class Buku {
 	@Override
 	public String toString() {
 		return "Buku [idBuku=" + idBuku + ", judul=" + judul + ", tglBeli="
-				+ tglBeli + ", penerbit=" + penerbit + "]";
+				+ tglBeli + ", penerbit=" + penerbit + ", kategori=" + kategori
+				+ "]";
 	}
 
 	public int getIdBuku() {
@@ -76,6 +78,14 @@ public class Buku {
 
 	public void setPenerbit(String penerbit) {
 		this.penerbit = penerbit;
+	}
+
+	public Kategori getKategori() {
+		return kategori;
+	}
+
+	public void setKategori(Kategori kategori) {
+		this.kategori = kategori;
 	}
 	
 	

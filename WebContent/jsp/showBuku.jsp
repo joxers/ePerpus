@@ -26,6 +26,8 @@
 			<th>Id</th>
 			<th>Judul</th>			
 			<th>Tanggal Beli</th>	
+			<th>Kategori</th>	
+			
 			<th>Penerbit</th>	
 			
 			<th width="100">Tindakan</th>
@@ -41,6 +43,7 @@
 				<td><c:out value="${buku.idBuku}"></c:out></td>
 				<td><c:out value="${buku.judul}"></c:out></td>
 				<td><c:out value="${buku.tglBeli}"></c:out> </td>
+				<td><c:out value="${buku.kategori.kategori}"></c:out> </td>
 				<td><c:out value="${buku.penerbit}"></c:out> </td>
 				
 				<td>

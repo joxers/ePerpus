@@ -19,7 +19,7 @@
 					<tr>
 						<td width="100" align="right">Judul</td>
 						<td width="150">
-						<form:input path="judul"/></td>
+						<form:textarea rows="5" cols="40" path="judul"/></td>
 						<td align="left">
 						<form:errors path="judul" cssStyle="color:red"></form:errors> 
 						</td>
@@ -32,6 +32,20 @@
 						<form:errors path="tglBeli" cssStyle="color:red"></form:errors> 
 						</td>
 					</tr>
+					<tr>
+					<td width="100" align="right">Kategori</td>
+					<td>
+					 	
+<form:select path="kategori">
+    <form:options items="${kategoris}" itemValue="idKategori" itemLabel="kategori" />
+</form:select>
+
+
+
+
+
+                    </td>
+                    </tr>
 					<tr>
 						<td width="100" align="right">Penerbit</td>
 						<td width="150">
