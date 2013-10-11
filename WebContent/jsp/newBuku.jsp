@@ -35,11 +35,16 @@
 					<tr>
 					<td width="100" align="right">Kategori</td>
 					<td>
-					 	
-<form:select path="kategori">
-    <form:options items="${kategoris}" itemValue="idKategori" itemLabel="kategori" />
-</form:select>
-
+										 	
+					<%-- <form:select path="kategori"> --%>
+					<%--     <form:options items="${kategoris}" itemLabel="kategori" /> --%>
+					<%-- </form:select> --%>
+					<form:select path="kategori.idKategori" cssStyle="width: 150px;">    
+							<option value="-1">Select a type</option>
+							<c:forEach items="${kategoris}" var="kategori">
+								<option value="${kategori.idKategori}">${kategori.kategori}</option>
+							</c:forEach>
+						</form:select>
 
 
 

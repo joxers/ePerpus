@@ -28,13 +28,31 @@
 							<td align="left"><form:errors path="judul"
 									cssStyle="color:red"></form:errors></td>
 						</tr>
-							<tr>
+						<tr>
 							<td width="100" align="right">Tanggal Beli</td>
 							<td width="90"><form:input path="tglBeli" /></td>
 							<td align="left"><form:errors path="tglBeli"
 									cssStyle="color:red"></form:errors></td>
 						</tr>
-							<tr>
+						<tr>
+							<td width="100" align="right">Kategori</td>
+							<td>
+							<form:select path="kategori.idKategori" cssStyle="width: 150px;">    
+								<option value="-1">Select a type</option>
+								<c:forEach items="${kategoris}" var="kategori">
+									<option value="${kategori.kategori}">${kategori.kategori}</option>
+								</c:forEach>
+							</form:select>
+							
+<%-- 							<form:label path="type">Publication Type:</form:label> --%>
+<%-- 				   		<form:select path="type">     --%>
+<%-- 							<c:forEach items="${categories}" var="category"> --%>
+<%-- 							<option value="category.categoryName">${category.name}</option> --%>
+<%-- 							</c:forEach> --%>
+<%-- 						</form:select> --%>
+							</td>
+						</tr>	
+						<tr>
 							<td width="100" align="right">Penerbit</td>
 							<td><form:input path="penerbit" /></td>
 							<td align="left"><form:errors path="penerbit"

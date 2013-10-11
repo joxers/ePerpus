@@ -28,7 +28,7 @@ import com.ils.entity.Kategori;
 
 /**
  * @author danangku
- *
+ * 
  */
 @Controller
 public class BukuController {
@@ -52,10 +52,10 @@ public class BukuController {
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(
 				dateFormat, true));
 	}
-	
+
 	@RequestMapping("/searchBuku")
-	public ModelAndView searchBuku(@RequestParam(required= false, defaultValue="") String judul)
-	{
+	public ModelAndView searchBuku(
+			@RequestParam(required = false, defaultValue = "") String judul) {
 		ModelAndView mav = new ModelAndView("showBuku");
 		List<Buku> bukus = bukuDao.searchBuku(judul.trim());
 		mav.addObject("SEARCH_BUKU_RESULTS_KEY", bukus);
@@ -66,12 +66,12 @@ public class BukuController {
 	public ModelAndView getAllBuku() {
 		ModelAndView mav = new ModelAndView("showBuku");
 		Map referenceData = new HashMap();
-//		Map<String,String> kategoris = new LinkedHashMap<String,String>();
-		
-		List<Buku> buku = bukuDao.getAllBuku();		
+		// Map<String,String> kategoris = new LinkedHashMap<String,String>();
+
+		List<Buku> buku = bukuDao.getAllBuku();
 		List<Kategori> kategoris = kategoriDao.getAllKategori();
 		mav.addObject("SEARCH_BUKU_RESULTS_KEY", buku);
-//		mav.addObject("kategoriList", kategoris);
+		// mav.addObject("kategoriList", kategoris);
 		referenceData.put("kategoriList", kategoris);
 		return mav;
 	}
@@ -85,64 +85,59 @@ public class BukuController {
 		mav.addObject("kategoris", kategoris);
 		return mav;
 	}
-//	@RequestMapping(value = "/saveBuku", method = RequestMethod.GET)
-//	public ModelAndView newbukuForm(@ModelAttribute("command")  Buku buku,BindingResult result) {
-//		Map<String, Object> model = new HashMap<String, Object>();
-////		ModelAndView mav = new ModelAndView("newBuku");
-//		
-//		model.put("newBuku",  bukuDao.getAllBuku());
-//		model.put("categories",  kategoriDao.getAllKategori());
-//		return new ModelAndView("newBuku", model);
-//	}
-	
-//	@RequestMapping(value="/saveBuku", method=RequestMethod.POST)
-//	 public String create(@ModelAttribute("newBuku")Buku buku, BindingResult result, SessionStatus status)
-//	 {
-//	  validator.validate(buku, result);
-//	  if (result.hasErrors()) 
-//	  {    
-//	   return "newBuku";
-//	  }
-//	  bukuDao.save(buku);
-//	  status.setComplete();
-//	  return "redirect:viewAllBuku.do";
-//	 }
-	
+
 	@RequestMapping(value = "/saveBuku", method = RequestMethod.POST)
-	public ModelAndView create(@ModelAttribute("newBuku") Buku buku, 
+	public ModelAndView create(@ModelAttribute("newBuku") Buku buku,
 			BindingResult result) {
-		  bukuDao.save(buku);
+		validator.validate(buku, result);
+		if (result.hasErrors()) {
+			return new ModelAndView("newBuku");
+		}
+		bukuDao.save(buku);
 		return new ModelAndView("redirect:viewAllBuku.do");
-		  
+
 	}
-	
-	@RequestMapping(value="/updateBuku", method=RequestMethod.GET)
-	 public ModelAndView editBuku(@RequestParam("idBuku")Integer idBuku)
-	 {
-	  ModelAndView mav = new ModelAndView("editBuku");
-	  Buku buku = bukuDao.getById(idBuku);
-	  mav.addObject("editBuku", buku);
-	  return mav;
-	 }
-	
-	 @RequestMapping(value="/updateBuku", method=RequestMethod.POST)
-	 public String update(@ModelAttribute("editBuku") Buku buku, BindingResult result, SessionStatus status)
-	 {
-	  validator.validate(buku, result);
-	  if (result.hasErrors()) {
-	   return "editBuku";
-	  }
-	  bukuDao.update(buku);
-	  status.setComplete();
-	  return "redirect:viewAllBuku.do";
-	 }
-	 
-	 
-	 @RequestMapping("deleteBuku")
-	 public ModelAndView delete(@RequestParam("idBuku")Integer idBuku){
-	  ModelAndView mav = new ModelAndView("redirect:viewAllBuku.do");
-	  bukuDao.delete(idBuku);
-	  return mav;
-	 }
-	
+
+	@RequestMapping(value = "/updateBuku", method = RequestMethod.GET)
+	public ModelAndView editBuku(@RequestParam("idBuku") Integer idBuku) {
+		ModelAndView mav = new ModelAndView("editBuku");
+		Buku buku = bukuDao.getById(idBuku);
+		List<Kategori> kategoris = kategoriDao.getAllKategori();
+		mav.addObject("editBuku", buku);
+		mav.addObject("kategoris", kategoris);
+		return mav;
+	}
+
+	// @RequestMapping(value="/updateBuku", method=RequestMethod.POST)
+	// public String update(@ModelAttribute("editBuku") Buku buku, BindingResult
+	// result, SessionStatus status){
+	// validator.validate(buku, result);
+	// if (result.hasErrors()) {
+	// return "editBuku";
+	// }
+	// bukuDao.update(buku);
+	// status.setComplete();
+	// return "redirect:viewAllBuku.do";
+	// }
+	@RequestMapping(value = "/updateBuku", method = RequestMethod.POST)
+	public ModelAndView update(@ModelAttribute("editBuku") Buku buku,
+			BindingResult result, SessionStatus status) {
+		validator.validate(buku, result);
+		if (result.hasErrors()) {
+			return new ModelAndView("editBuku");
+		}
+		bukuDao.update(buku);
+		 status.setComplete();
+
+		return new ModelAndView("redirect:viewAllBuku.do");
+
+	}
+
+	@RequestMapping("deleteBuku")
+	public ModelAndView delete(@RequestParam("idBuku") Integer idBuku) {
+		ModelAndView mav = new ModelAndView("redirect:viewAllBuku.do");
+		bukuDao.delete(idBuku);
+		return mav;
+	}
+
 }

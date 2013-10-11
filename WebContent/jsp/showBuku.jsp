@@ -47,7 +47,7 @@
 				<td><c:out value="${buku.penerbit}"></c:out> </td>
 				
 				<td>
-					&nbsp;<a href="updateBuku.do?idBuku=${buku.idBuku}">Edit</a>
+					&nbsp;<a href="updateBuku.do?idBuku=${buku.idBuku}">Edit</a> |
 					&nbsp;&nbsp;<a href="javascript:deleteBuku('deleteBuku.do?idBuku=${buku.idBuku}');">Delete</a>
 				</td>
 			</tr>
