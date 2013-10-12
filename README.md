@@ -5,7 +5,7 @@
 
 ##Running ePerpus locally
 ```
-    git clone https://github.com/danangindrak/eAlumni.git
+    git clone https://github.com/danangindrak/ePerpus.git
     mvn tomcat7:run
 ```
 
